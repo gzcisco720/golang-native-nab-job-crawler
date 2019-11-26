@@ -1,8 +1,10 @@
 package engine
 
 import (
+	"fmt"
 	"goweb/fetcher"
 	"goweb/model"
+	"goweb/nab-career/parser"
 	"goweb/service"
 	"log"
 )
@@ -22,9 +24,15 @@ type Scheduler interface {
 func (e *ConcurrentEngine) Run(seeds ...model.Request) {
 	out := make(chan model.ParseResult)
 	e.Scheduler.Run()
-
 	elasticService := service.ElasticService{}
 	elasticService.Init()
+
+	jobLinks, err := parser.GetJobLinks()
+	if err!=nil {
+		panic(err)
+	}
+
+	numOfJobs := len(jobLinks)
 
 	for i:=0; i<e.WorkerCount; i++ {
 		createWorker(out, e.Scheduler)
@@ -33,9 +41,18 @@ func (e *ConcurrentEngine) Run(seeds ...model.Request) {
 	for _, r := range seeds {
 		e.Scheduler.Submit(r)
 	}
+
+	jobTh := 0
+	fmt.Println("There are ",numOfJobs," Jobs")
+	fmt.Println("=============================")
 	for {
+		if jobTh == numOfJobs {
+			break
+		}
 		result := <- out
 		for _, item := range result.Items {
+			jobTh++
+			fmt.Println("JobNo:", item.JobNo, "JobTitle:", item.Title)
 			elasticService.Save(item)
 		}
 		for _, request := range result.Requests {

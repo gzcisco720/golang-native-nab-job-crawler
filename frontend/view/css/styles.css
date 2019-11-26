@@ -1,3 +1,7 @@
 .MainContainer {
     padding: 2em;
 }
+
+.MainContainer .MainContainer__SearchForm {
+    padding: 2em;
+}
