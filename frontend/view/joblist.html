@@ -8,10 +8,19 @@
 </head>
 <body>
     <div class="ui fluid container MainContainer">
+        <form class="ui form MainContainer__SearchForm" method="get">
+            <div class="field">
+                <label>Search</label>
+                <input type="text" name="q" placeholder="Search">
+                <input type="text" name="from" value="0" hidden>
+            </div>
+            <button class="ui primary button" type="submit">Submit</button>
+        </form>
         <table class="ui celled padded table">
             <thead>
                 <tr>
                     <th class="single line">JobNo</th>
+                    <th class="single line">JobTitle</th>
                     <th class="single line">Location</th>
                     <th class="single line">WorkType</th>
                     <th class="single line">BusinessUnit</th>
@@ -25,6 +34,9 @@
                     <a target="_blank" href="http://careers.pageuppeople.com/410/cai/en/job/{{.JobNo}}">{{.JobNo}}</a>
                 </td>
                 <td>
+                    {{.Title}}
+                </td>
+                <td>
                     {{.Location}}
                 </td>
                 <td>
@@ -33,7 +45,7 @@
                 <td>
                     {{.BusinessUnit}}
                 </td>
-                <td>
+                <td class="single line">
                     {{.Date}}
                 </td>
             </tr>
@@ -41,7 +53,7 @@
             </tbody>
             <tfoot>
             <tr>
-                <th colspan="5">
+                <th colspan="6">
                     <div class="ui right floated pagination menu">
                         {{range .Pagers}}
                         <a class="item" href="{{.URL}}">{{.PageNumber}}</a>

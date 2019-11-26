@@ -27,7 +27,7 @@ func (e *ElasticService) Save(item model.JobProfile) {
 		panic(err)
 	}
 	if res.Result == "created" {
-		fmt.Println("New Job gets released: id = %s", res.Id)
+		fmt.Println("New Job gets released: Id = ", res.Id)
 	}
 }
 
