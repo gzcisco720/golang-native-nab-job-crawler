@@ -2,8 +2,8 @@
 
 ## System requirements
 
-- Go 1.1x
-- Elasticsearch 6.X (Important)
+- Go 1.12
+- Elasticsearch 6.8 (Important)
 - Dep
 
 ## Install Dependencies
