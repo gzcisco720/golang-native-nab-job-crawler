@@ -10,18 +10,29 @@ import (
 //ParseJobList func
 func ParseJobList(doc *goquery.Document) model.ParseResult {
 	result := model.ParseResult{}
-	jobLinks, err := GetJobLinks()
-	if err!=nil {
-		panic(err)
-	}
-	for _, link := range jobLinks{
-		result.Requests = append(
-			result.Requests,
-			model.Request{
-				URL:        link,
-				ParserFunc: ParseJob,
-			})
-	}
+	//jobLinks, err := GetJobLinks()
+	//if err!=nil {
+	//	panic(err)
+	//}
+	doc.Find(".job-link").Each(func(i int, s *goquery.Selection) {
+		link, ok := s.Attr("href")
+		if ok {
+			result.Requests = append(
+				result.Requests,
+				model.Request{
+					URL:        "http://careers.nab.com.au"+link,
+					ParserFunc: ParseJob,
+				})
+		}
+	})
+	//for _, link := range jobLinks{
+	//	result.Requests = append(
+	//		result.Requests,
+	//		model.Request{
+	//			URL:        link,
+	//			ParserFunc: ParseJob,
+	//		})
+	//}
 	return result
 }
 

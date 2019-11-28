@@ -1,10 +1,8 @@
 package engine
 
 import (
-	"fmt"
 	"goweb/fetcher"
 	"goweb/model"
-	"goweb/nab-career/parser"
 	"goweb/service"
 	"log"
 )
@@ -27,12 +25,12 @@ func (e *ConcurrentEngine) Run(seeds ...model.Request) {
 	elasticService := service.ElasticService{}
 	elasticService.Init()
 
-	jobLinks, err := parser.GetJobLinks()
-	if err!=nil {
-		panic(err)
-	}
+	//jobLinks, err := parser.GetJobLinks()
+	//if err!=nil {
+	//	panic(err)
+	//}
 
-	numOfJobs := len(jobLinks)
+	//numOfJobs := len(jobLinks)
 
 	for i:=0; i<e.WorkerCount; i++ {
 		createWorker(out, e.Scheduler)
@@ -42,17 +40,17 @@ func (e *ConcurrentEngine) Run(seeds ...model.Request) {
 		e.Scheduler.Submit(r)
 	}
 
-	jobTh := 0
-	fmt.Println("There are ",numOfJobs," Jobs")
-	fmt.Println("=============================")
+	//jobTh := 0
+	//fmt.Println("There are ",numOfJobs," Jobs")
+	//fmt.Println("=============================")
 	for {
-		if jobTh == numOfJobs {
-			break
-		}
+		//if jobTh == numOfJobs {
+		//	break
+		//}
 		result := <- out
 		for _, item := range result.Items {
-			jobTh++
-			fmt.Println("JobNo:", item.JobNo, "JobTitle:", item.Title)
+			//jobTh++
+			//fmt.Println("JobNo:", item.JobNo, "JobTitle:", item.Title)
 			elasticService.Save(item)
 		}
 		for _, request := range result.Requests {
