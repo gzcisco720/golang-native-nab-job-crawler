@@ -15,3 +15,7 @@ Run `dep ensure`
 WebSpider: `go run main.go`
 
 Frontend: `go run frontend/starter.go`
+
+## View Job list
+
+visit http://localhost:8888/search
