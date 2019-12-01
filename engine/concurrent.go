@@ -54,7 +54,10 @@ func (e *ConcurrentEngine) Run(seeds ...model.Request) {
 		for _, item := range result.Items {
 			jobTh++
 			fmt.Println("JobNo:", item.JobNo, "JobTitle:", item.Title)
-			elasticService.Save(item)
+			err = elasticService.Save(item)
+			if err != nil {
+				log.Print(err)
+			}
 		}
 		for _, request := range result.Requests {
 			e.Scheduler.Submit(request)

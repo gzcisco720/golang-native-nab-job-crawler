@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"github.com/olivere/elastic"
 	"goweb/model"
@@ -12,9 +13,9 @@ type ElasticService struct {
 	Context context.Context
 }
 
-func (e *ElasticService) Save(item model.JobProfile) {
+func (e *ElasticService) Save(item model.JobProfile) error {
 	if e.Client == nil {
-		panic("Please init elastic client first")
+		return errors.New("Please init elastic client first")
 	}
 	res, err := e.Client.
 		Index().
@@ -24,11 +25,12 @@ func (e *ElasticService) Save(item model.JobProfile) {
 		BodyJson(item).
 		Do(e.Context)
 	if err != nil {
-		panic(err)
+		return err
 	}
 	if res.Result == "created" {
 		fmt.Println("New Job gets released: Id = ", res.Id)
 	}
+	return nil
 }
 
 func (e *ElasticService) Init() {
