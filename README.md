@@ -18,4 +18,6 @@ Frontend: `go run frontend/starter.go`
 
 ## View Job list
 
+Run Webspider first then run frontend to check joblist
+
 visit http://localhost:8888/search
