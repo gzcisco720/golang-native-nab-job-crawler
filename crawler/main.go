@@ -14,6 +14,7 @@ func main() {
 		Scheduler:   &scheduler.QueuedScheduler{},
 		WorkerCount: 10,
 		ItemChannel: persist.ItemSaver(),
+		Processor: engine.Worker,
 	}
 	//e := engine.SimpleEngine{}
 	e.Run(

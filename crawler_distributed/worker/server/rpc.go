@@ -1,10 +1,12 @@
-package worker
+package server
 
-import "goweb/crawler/engine"
+import (
+	"goweb/crawler/engine"
+)
 
-type WorkerService struct {}
+type RpcWorkerService struct {}
 
-func (WorkerService)Process(req Request, result *ParseResult) error {
+func (r *RpcWorkerService)Process(req Request, result *ParseResult) error {
 	dRequest, err := DeserialiseRequest(req)
 	if err != nil {
 		return err

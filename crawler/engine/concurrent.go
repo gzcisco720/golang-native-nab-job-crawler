@@ -8,10 +8,13 @@ import (
 	"log"
 )
 
+type Processor func(model2.Request) (model2.ParseResult, error)
+
 type ConcurrentEngine struct {
 	Scheduler Scheduler
 	WorkerCount int
 	ItemChannel chan interface{}
+	Processor Processor
 }
 
 type Scheduler interface {
@@ -35,7 +38,7 @@ func (e *ConcurrentEngine) Run(seeds ...model2.Request) {
 	numOfJobs := len(jobLinks)
 
 	for i:=0; i<e.WorkerCount; i++ {
-		createWorker(out, e.Scheduler)
+		e.createWorker(out, e.Scheduler)
 	}
 
 	for _, r := range seeds {
@@ -64,13 +67,13 @@ func (e *ConcurrentEngine) Run(seeds ...model2.Request) {
 	}
 }
 
-func createWorker(out chan model2.ParseResult, scheduler Scheduler)  {
+func (e *ConcurrentEngine) createWorker(out chan model2.ParseResult, scheduler Scheduler)  {
 	in := make(chan model2.Request)
 	go func() {
 		for {
 			scheduler.WorkerReady(in)
 			r := <-in
-			result, err := Worker(r)
+			result, err := e.Processor(r)
 			if err != nil {
 				log.Printf("Error happens when fetch: %s", r.URL)
 				continue

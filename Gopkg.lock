@@ -67,6 +67,7 @@
   input-imports = [
     "github.com/PuerkitoBio/goquery",
     "github.com/olivere/elastic",
+    "github.com/pkg/errors",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1

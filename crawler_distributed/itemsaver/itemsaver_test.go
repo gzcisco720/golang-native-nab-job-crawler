@@ -2,16 +2,16 @@ package main
 
 import (
 	"goweb/crawler/model"
-	"goweb/crawler_distributed/persist"
-	rpc_support "goweb/crawler_distributed/rpc-support"
+	"goweb/crawler_distributed/itemsaver/server"
+	"goweb/crawler_distributed/rpc-support"
 	"testing"
 	"time"
 )
 
 func TestRpcServer(t *testing.T)  {
-	const host = ":8080"
+	const host = ":8081"
 
-	go rpc_support.ServeRpc(host, &persist.RpcItemService{})
+	go rpc_support.ServeRpc(host, &server.RpcItemService{})
 
 	time.Sleep(time.Second)
 

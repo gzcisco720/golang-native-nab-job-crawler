@@ -16,7 +16,7 @@ func RpcItemSaver(host string) (chan interface{}, error) {
 			item := <-out
 			if i, ok := item.(model.JobProfile); ok{
 				result := " "
-				client.Call("RpcItemService.Save", i , result)
+				client.Call("RpcItemService.Save", i , &result)
 			}
 		}
 	}()
