@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>This is a Job List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.css"/>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="ui fluid container MainContainer">
+        <form class="ui form MainContainer__SearchForm" method="get">
+            <div class="field">
+                <label>Search</label>
+                <input type="text" name="q" placeholder="Search">
+                <input type="text" name="from" value="0" hidden>
+            </div>
+            <button class="ui primary button" type="submit">Submit</button>
+        </form>
+        <table class="ui celled padded table">
+            <thead>
+                <tr>
+                    <th class="single line">JobNo</th>
+                    <th class="single line">JobTitle</th>
+                    <th class="single line">Location</th>
+                    <th class="single line">WorkType</th>
+                    <th class="single line">BusinessUnit</th>
+                    <th class="single line">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+            {{range .Jobs}}
+            <tr>
+                <td>
+                    <a target="_blank" href="http://careers.nab.com.au/aw/en/job/{{.JobNo}}">{{.JobNo}}</a>
+                </td>
+                <td>
+                    {{.Title}}
+                </td>
+                <td>
+                    {{.Location}}
+                </td>
+                <td>
+                    {{.WorkType}}
+                </td>
+                <td>
+                    {{.BusinessUnit}}
+                </td>
+                <td class="single line">
+                    {{.Date}}
+                </td>
+            </tr>
+            {{ end }}
+            </tbody>
+            <tfoot>
+            <tr>
+                <th colspan="6">
+                    <div class="ui right floated pagination menu">
+                        {{range .Pagers}}
+                        <a class="item" href="{{.URL}}">{{.PageNumber}}</a>
+                        {{ end }}
+                    </div>
+                </th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.js"></script>
+</body>
+</html>
