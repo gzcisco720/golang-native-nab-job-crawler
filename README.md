@@ -27,7 +27,7 @@ ItemSaver:  `go run /crawler_distributed/itemsaver.go --port 8080` (could be any
 
 Worker:  `go run /crawler_distributed/worker.go --port 8080` (could be any int)
 
-Client: `go run main.go --itemSaverHost ":8080" --workerHosts ":9000,:90001"` (ports should be string with ":" prefix)
+Client: `go run main.go --itemSaverHost ":8080" --workerHosts ":9000,:9001"` (ports should be string with ":" prefix)
 
 ## View Job list
 
