@@ -4,16 +4,16 @@ import (
 	"fmt"
 	controller2 "goweb/crawler/frontend/controller"
 	view2 "goweb/crawler/frontend/view"
-	"goweb/service"
+	"goweb/crawler/persist"
 	"net/http"
 	"path/filepath"
 )
 
 func main() {
-	elastic := service.ElasticService{}
+	elastic := persist.ElasticService{}
 	elastic.Init()
-	templatePath, _ := filepath.Abs("frontend/view/joblist.html")
-	filePath, _ := filepath.Abs("frontend/view")
+	templatePath, _ := filepath.Abs("crawler/frontend/view/joblist.html")
+	filePath, _ := filepath.Abs("crawler/frontend/view")
 	handler := controller2.JobListController{
 		Renderer: view2.RenderService{}.InitService(templatePath),
 		Client:   elastic.Client ,
